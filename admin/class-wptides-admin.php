@@ -19,6 +19,12 @@ class Wptides_Admin {
 	public function __construct() {
 	}
 
+	public function enqueue_styles() {
+
+		wp_enqueue_style( 'wpTides', plugin_dir_url( __DIR__ ) . 'public/css/wptides-public.css', [], '1.0.0', 'all' );
+
+	}
+
 	public function wptides_admin_menu() {
 		add_menu_page(
 			'wpTides Plugin',
