@@ -2,3 +2,22 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+.wpTides .title, .wpTides .date {
+	text-align: center;
+}
+
+.wpTides .row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.wpTides .column {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	flex-basis: 100%;
+	flex: 1;
+}
