@@ -72,6 +72,7 @@ class Wptides {
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wptides_admin_menu' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wptides_register_admin_menu_settings' );
+
 	}
 
 	/**
@@ -86,6 +87,8 @@ class Wptides {
 		$plugin_public = new Wptides_Public();
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		// We need the css in the admin as well
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 
 		$plugin_public->wptides_shortcodes_init();
 
