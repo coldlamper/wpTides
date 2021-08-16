@@ -50,7 +50,7 @@ class Wptides_Public {
 				break;
 			}
 
-			$prediction_dt = new DateTime($prediction['t']);
+			$prediction_dt = new DateTime($prediction['t'], $timezone);
 			$tide_timestamp = $prediction_dt->getTimestamp();
 
 			$next_tide = false;
