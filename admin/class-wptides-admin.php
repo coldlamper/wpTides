@@ -69,7 +69,7 @@ class Wptides_Admin {
 	public function get_admin_content() {
 		include_once(plugin_dir_path( __DIR__ ) . 'admin/partials/wptides-admin-display.php');
 
-		$plugin_public = new Wptides_Public($this->plugin_name, $this->version);
+		$plugin_public = new Wptides_Public();
 		echo $plugin_public->display();
 	}
 

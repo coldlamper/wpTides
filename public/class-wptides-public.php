@@ -12,11 +12,6 @@ class Wptides_Public {
 	public function __construct() {
 	}
 
-	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
 	public function enqueue_styles() {
 
 		wp_enqueue_style( 'wpTides', plugin_dir_url( __FILE__ ) . 'css/wptides-public.css', array(), '1.0.0', 'all' );
@@ -29,21 +24,26 @@ class Wptides_Public {
 
 	}
 
+	// Format and clean the data for use in the public facing tempate
 	public function format_json_tide_prediction(string $response, string $station_time_zone) {
 
 		$tide_predictions = json_decode( $response, true );
 		$tide_predictions = $tide_predictions['predictions'];
 
+		// Gets the timezone conversion array. Converts Noaa timezones to PHP timezones
 		$timezones = Wptides_Noaa_Tides::get_timezones();
 
+		// We want to use the stations timezone for comparing timestamps
 		$timezone = new DateTimeZone($timezones[$station_time_zone]);
 
-		$station_datetime = new DateTime("now", $timezone);
+		$station_datetime = new DateTime('now', $timezone);
 		$station_timestamp = $station_datetime->getTimestamp();
 
 		$next_tide_found = false;
 		foreach( $tide_predictions as $index=>$prediction )
 		{
+			// If we have all the tides for the day truncate the array
+			// Checking for $next_tide_found will allow and extra tide(the next day's tide) to be displayed
 			if ($index > 3 and $next_tide_found)
 			{
 				$tide_predictions = array_slice($tide_predictions, 0, $index);
@@ -60,9 +60,12 @@ class Wptides_Public {
 				$next_tide_found = true;
 			}
 
+			// Format the time output
 			$local_time = $prediction_dt->format('g:i A');
 
 			$tide_predictions[$index]['local_time'] = $local_time;
+
+			// Can be used to highlight the upcomming tide
 			$tide_predictions[$index]['next_tide'] = $next_tide;
 		}
 
@@ -79,8 +82,10 @@ class Wptides_Public {
 		}
 
 		$noaa_api = new Wptides_Noaa_Tides();
+		// Gets the timezone conversion array. Converts Noaa timezones to PHP timezones
 		$timezones = Wptides_Noaa_Tides::get_timezones();
 
+		// Get the tide station info
 		$response = $noaa_api->metadata_station_request( $options['station'] );
 		if ($response)
 		{
@@ -100,11 +105,12 @@ class Wptides_Public {
 			'station' 		=> $options['station'],
 		];
 
+		// Get tide predictions
 		$response = $noaa_api->tide_predictions($request_params);
 
 		$tide_predictions = $this->format_json_tide_prediction($response, $station['timezone']);
 
-
+		// Load the partial template
 		ob_start();
 		include( plugin_dir_path( __DIR__ ) . 'public/partials/wptides-public-display.php' );
 		return ob_get_clean();
