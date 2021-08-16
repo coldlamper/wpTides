@@ -16,7 +16,7 @@
 	<div class="title">Today's Tides for <?= ucwords(strtolower($station['name'])) ?>, <?= $station['state'] ?> - Station ID <?= $station['id']?></div>
 	<div class="date"><?= $station_datetime->format('F j, Y h:i:s A') ?></div>
 	<?php foreach( $tide_predictions as $index=>$prediction ) : ?>
-		<div class="row" style="<?= $prediction['next_tide'] ? 'font-weight:bold; ':'' ?>">
+		<div class="row<?= $prediction['next_tide'] ? ' next-tide':'' ?>" style="<?= $prediction['next_tide'] ? 'font-weight:bold; ':'' ?>">
 			<div class="column">
 				<?= $prediction['local_time'] ?>
 			</div>

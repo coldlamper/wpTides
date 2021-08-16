@@ -18,6 +18,10 @@
 	width: 100%;
 }
 
+.wpTides .row.next-tide {
+	font-weight: bold;
+}
+
 .wpTides .column {
 	align-items: center;
 	display: flex;
