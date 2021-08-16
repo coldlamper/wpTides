@@ -12,10 +12,6 @@
 
 class Wptides_Admin {
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 */
 	public function __construct() {
 	}
 
@@ -40,8 +36,6 @@ class Wptides_Admin {
 	public function wptides_register_admin_menu_settings() {
 		//register our settings
 		register_setting( 'wptides_settings', 'wptides_settings', 'wptides_validate_settings' );
-		// register_setting( 'wptides-settings-group', 'latitude' );
-		// register_setting( 'wptides-settings-group', 'longitude' );
 
 		add_settings_section( 'wptides_settings', 'Settings', ['Wptides_Admin', 'wptides_settings_section_text'], 'wptides-plugin-main' );
 
