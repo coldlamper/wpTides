@@ -26,3 +26,8 @@
 			value="<?php esc_attr_e( 'Save' ); ?>"
 	/>
 </form>
+
+<br><br>
+Sample output
+<br><br>
+<?= $sample_output ?>
